@@ -89,7 +89,7 @@ function installQuestions() {
 	done
 
 	until [[ ${SERVER_WG_IPV4} =~ ^([0-9]{1,3}\.){3} ]]; do
-		read -rp "Server's WireGuard IPv4: " -e -i 10.66.66.1 SERVER_WG_IPV4
+		read -rp "Server's WireGuard IPv4: " -e -i 10.179.0.1 SERVER_WG_IPV4
 	done
 
 	until [[ ${SERVER_WG_IPV6} =~ ^([a-f0-9]{1,4}:){3,4}: ]]; do
@@ -119,9 +119,7 @@ function installQuestions() {
 	read -n1 -r -p "Press any key to continue..."
 }
 
-function installWireGuard() {
-	# Run setup questions first
-	installQuestions
+function installPackage() {
 
 	# Install WireGuard tools and module
 	if [[ ${OS} == 'ubuntu' ]] || [[ ${OS} == 'debian' && ${VERSION_ID} -gt 10 ]]; then
@@ -156,6 +154,13 @@ function installWireGuard() {
 	mkdir /etc/wireguard >/dev/null 2>&1
 
 	chmod 600 -R /etc/wireguard/
+
+}
+
+function installWireGuard() {
+	# Run setup questions first
+	installQuestions
+    installPackage
 
 	SERVER_PRIV_KEY=$(wg genkey)
 	SERVER_PUB_KEY=$(echo "${SERVER_PRIV_KEY}" | wg pubkey)
