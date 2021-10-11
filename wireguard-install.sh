@@ -96,10 +96,8 @@ function installQuestions() {
         read -rp "Server's WireGuard IPv6: " -e -i fd42:42:42::1 SERVER_WG_IPV6
     done
 
-    # Generate random number within private ports range
-    RANDOM_PORT=$(shuf -i49152-65535 -n1)
     until [[ ${SERVER_PORT} =~ ^[0-9]+$ ]] && [ "${SERVER_PORT}" -ge 1 ] && [ "${SERVER_PORT}" -le 65535 ]; do
-        read -rp "Server's WireGuard port [1-65535]: " -e -i "${RANDOM_PORT}" SERVER_PORT
+        read -rp "Server's WireGuard port [1-65535]: " -e -i "443" SERVER_PORT
     done
 
     # Adguard DNS by default
