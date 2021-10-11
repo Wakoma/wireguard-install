@@ -160,7 +160,7 @@ function installPackage() {
 function installWireGuard() {
 	# Run setup questions first
 	installQuestions
-    installPackage
+        installPackage
 
 	SERVER_PRIV_KEY=$(wg genkey)
 	SERVER_PUB_KEY=$(echo "${SERVER_PRIV_KEY}" | wg pubkey)
